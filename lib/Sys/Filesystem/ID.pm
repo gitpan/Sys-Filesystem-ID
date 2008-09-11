@@ -7,7 +7,7 @@ use vars qw(%FS @FSALL @FSOK $fs @ISA @EXPORT_OK %EXPORT_TAGS $VERSION);
 @ISA = qw/Exporter/;
 @EXPORT_OK = qw/&abs_id &get_id &create_id %FS @FSOK @FSALL/;
 %EXPORT_TAGS = ( 'all' => \@EXPORT_OK );
-$VERSION = sprintf "%d.%02d", q$Revision: 1.4 $ =~ /(\d+)/g;
+$VERSION = sprintf "%d.%02d", q$Revision: 1.6 $ =~ /(\d+)/g;
 
 *get_id    = \&_id_by_arg;
 *create_id = \&_write_new_idfile_by_arg;
@@ -202,7 +202,7 @@ Will read and write an id from a filesystem for data identification purposes.
 
 =head2 HOW IT WORKS
 
-We create a text file at the root of the mounted fs in question- an id file.
+We create a text file at the root of the mounted filesystem in question- an id file.
 
 =head2 MOTIVATION
 
@@ -210,7 +210,7 @@ This can be used to identify hard drives as they move across computers on a netw
 If you want to store information about a usb drive in a centralized database.
 Then you can move the hard drive (with partitions inside) around and you can track them.
 
-=head2 fsid
+=head1 fsid
 
 A cli (command line interface) application is provided, called fsid, with this 
 distribtution.
@@ -249,11 +249,14 @@ Override _suggest_id_string() in this package.
 
 The rule is it must return a string.
 
+=head1 CAVEATS
+
+You must have write access to create a partition id, and read access to see it.
+This works on posix only.
 
 =head1 REQUIREMENTS
 
 Sys::Filesystem
-
 
 =head1 SEE ALSO
 

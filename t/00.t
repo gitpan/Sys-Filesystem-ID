@@ -3,6 +3,10 @@ use strict;
 use lib './lib';
 use Sys::Filesystem::ID ':all';
 
+ok(1, 'used');
+
+
+
 
 my $tmp = './t/testfile';
 `touch $tmp`;
@@ -10,6 +14,16 @@ my $tmp = './t/testfile';
 
 my $absid = abs_id($tmp);
 ok($absid,"abs id suggested for $tmp; $absid");
+
+
+my $iam = `whoami`;
+chomp $iam;
+if( $iam ne 'root' ){
+   print STDERR "Further tests must be done as root. Exiting.\n";
+   exit;
+}
+
+
 
 
 my $id = get_id($tmp);

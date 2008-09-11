@@ -2,9 +2,8 @@
 use strict;
 use base 'LEOCHARRE::CLI';
 use vars qw($VERSION);
-use lib './lib';
 use Sys::Filesystem::ID ':all';
-$VERSION = sprintf "%d.%02d", q$Revision: 1.5 $ =~ /(\d+)/g;
+$VERSION = sprintf "%d.%02d", q$Revision: 1.6 $ =~ /(\d+)/g;
 
 my $o = gopts('lLA');
 
@@ -12,15 +11,16 @@ if (DEBUG){
    $Sys::Filesystem::ID::DEBUG = 1;
 }
 
-my $usage = qq{$0 - identify a storage filesystem
+sub usage {
+   qq{$0 - identify a storage filesystem
 
    -l list wanted fs formats (ext2, ext3)
    -L list all filesystems 
    -d debug
    -A make sure there's an fsid in each of the wanted fs formats
 
-See man fsid for more.
-};
+See man fsid for more.};
+}
 
 
 my %FS = %Sys::Filesystem::ID::FS;
@@ -76,7 +76,7 @@ sub _make_sure_all_fs_have_fsid {
 
 # actually we just want to do one path or dev etc.. not more
 my $arg = $ARGV[0];
-defined $arg or die("missign path or dev arg");
+defined $arg or print STDERR "missign path or dev arg\n" and exit(1);
 
 print get_id($arg);
 exit;
@@ -113,6 +113,10 @@ Get filesystem id for a path
 
    fsid ~/Desktop
 
+=head1 CAVEATS
+
+For posix systems only.
+
 =head1 SEE ALSO
 
 L<Sys::Filesystem::ID> for full API.
@@ -121,3 +125,5 @@ L<fsidgen> generate id.
 =head1 AUTHOR
 
 Leo Charre leocharre at cpan dot org
+
+=cut
